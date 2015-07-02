@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="bookshop.domain.Book" table="Book">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<property name="name" type="java.lang.String">
+			<column name="name" length="64" not-null="true" />
+		</property>
+		<property name="author" type="java.lang.String">
+			<column name="author" length="32" not-null="true" />
+		</property>
+		<property name="publish" type="java.lang.String">
+			<column name="publish" length="64" not-null="true" />
+		</property>
+		<property name="publishDate" type="java.util.Date">
+			<column name="publishDate" not-null="true" />
+		</property>
+		<property name="isbn" type="java.lang.String">
+			<column name="isbn" length="32" not-null="true" />
+		</property>
+		<property name="description" type="java.lang.String">
+			<column name="description" length="255" not-null="true" />
+		</property>
+		<property name="cover" type="java.lang.String">
+			<column name="cover" length="64" />
+		</property>
+		<property name="price" type="java.lang.Double">
+			<column name="price" length="32" not-null="true" />
+		</property>
+	</class>
+</hibernate-mapping>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="bookshop.domain.Inventory" table="Inventory">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<set name="inventoryDetails" inverse="true">
+			<key>
+				<column name="inventoryId" not-null="true" />
+			</key>
+			<one-to-many class="bookshop.domain.InventoryDetail" />
+		</set>
+		<property name="createDate" type="java.util.Date">
+			<column name="createDate" not-null="true" />
+		</property>
+		<property name="updateDate" type="java.util.Date">
+			<column name="updateDate" not-null="true" />
+		</property>
+		<many-to-one name="user" class="bookshop.domain.User">
+			<column name="userId" not-null="true" unique="true"/>
+		</many-to-one>
+	</class>
+</hibernate-mapping>

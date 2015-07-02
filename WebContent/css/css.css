@@ -1,0 +1,32 @@
+
+.blackcolor {
+	color: black !important;
+}
+
+body {
+	padding-top: 60px;
+	padding-bottom: 40px;
+}
+
+footer p {
+	text-align: right;
+}
+
+#order>div {
+	border: 2px solid #DDD;
+	border-radius: 6px 6px 6px 6px;
+}
+
+.padding {
+	padding-top: 30px;
+}
+td form{
+	margin:0 0 0 0!important;
+	padding:0!important;
+	width:65px;
+}
+td form input {
+	margin:0 0 0 0!important;
+	padding:0!important;
+	width:30px;
+}

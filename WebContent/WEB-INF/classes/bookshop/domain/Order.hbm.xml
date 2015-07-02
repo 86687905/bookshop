@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="bookshop.domain.Order" table="Orders">
+		<id name="id" type="java.lang.Integer">
+			<column name="id" />
+			<generator class="identity" />
+		</id>
+		<set name="orderDetails" inverse="true" lazy="false">
+			<key>
+				<column name="orderId" not-null="true" />
+			</key>
+			<one-to-many class="bookshop.domain.OrderDetail" />
+		</set>
+		<property name="totalPrice" type="java.lang.Double">
+			<column name="totalPrice" not-null="true" />
+		</property>
+		<property name="orderDate" type="java.util.Date">
+			<column name="orderDate" not-null="true" />
+		</property>
+		<property name="checkoutDate" type="java.util.Date">
+			<column name="checkoutDate"/>
+		</property>
+		<many-to-one name="user" class="bookshop.domain.User" lazy="false">
+			<column name="userId" not-null="true" />
+		</many-to-one>
+	</class>
+</hibernate-mapping>

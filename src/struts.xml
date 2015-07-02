@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC 
+	"-//Apache Software Foundation//DTD Struts Configuration 2.1.7//EN"
+	"http://struts.apache.org/dtds/struts-2.1.7">
+<struts>
+	<package name="global" namespace="/" extends="json-default">
+		<interceptors>
+			<interceptor name="loginInterceptor" class="bookshop.interceptor.AutoLoginInterceptor" />
+			<interceptor name="memberInterceptor" class="bookshop.interceptor.MemberInterceptor" />
+			<interceptor name="adminInterceptor" class="bookshop.interceptor.AdminInterceptor" />
+			<interceptor-stack name="loginStack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+			<interceptor-stack name="memberStack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="memberInterceptor" />
+				<interceptor-ref name="defaultStack" />		
+			</interceptor-stack>
+			<interceptor-stack name="adminStack">
+				<interceptor-ref name="loginInterceptor" />
+				<interceptor-ref name="adminInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-action-ref name="notFound"></default-action-ref>
+		
+		<global-results>
+			<result name="error">/error.jsp</result>
+			<result name="login">/login.jsp</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping exception="java.lang.Exception" result="error"/>
+		</global-exception-mappings>
+		
+		<action name="notFound"><result>/error.jsp</result></action>
+	</package>
+	
+	<package name="visitor" namespace="/" extends="global">
+		<default-interceptor-ref name="loginStack"/>
+		<!--=======================登录，退出、注册=======================-->
+		<action name="login" class="bookshop.action.LoginAction">
+			<result type="json"><param name="noCache">true</param></result>
+		</action>
+		<action name="logout" class="bookshop.action.LogoutAction">
+			<result>/index.jsp</result>
+		</action>
+		<action name="regist" class="bookshop.action.RegistAction">
+			<result type="json">
+				<param name="noCache">true</param>
+			</result>
+		</action>
+		<!--=======================游客浏览操作=======================-->
+		<action name="home" class="bookshop.action.HomeAction">
+			<result>/home.jsp</result>
+		</action>
+		<action name="book" class="bookshop.action.BookAction">
+			<result>/book.jsp</result>
+		</action>
+	</package>
+	
+	<package name="member" namespace="/" extends="global">
+		<default-interceptor-ref name="memberStack"/>
+		
+		<action name="createlistdetail" class="bookshop.action.CreateListDetailAction">
+			<result type="json"><param name="noCache">true</param></result>
+		</action>
+		
+		<action name="info" class="bookshop.action.InfoAction">
+			<result>/info.jsp</result>
+		</action>
+		<action name="updateuser" class="bookshop.action.UpdateUserAction">
+			<result type="json"><param name="noCache">true</param></result>
+		</action>
+		<action name="updatepassword" class="bookshop.action.UpdatePasswordAction">
+			<result type="json"><param name="noCache">true</param></result>
+		</action>
+		
+		<action name="list" class="bookshop.action.ListAction">
+			<result>/list.jsp</result>
+		</action>
+		<action name="updatelistdetail" class="bookshop.action.UpdateListDetailAction">
+			<result type="json"><param name="noCache">true</param></result>
+		</action>
+		<action name="deletelistdetail" class="bookshop.action.DeleteListDetailAction">
+			<result type="json"><param name="noCache">true</param></result>
+		</action>
+		<action name="createorderfromlist" class="bookshop.action.CreateOrderFromListAction">
+			<result type="redirectAction">order</result>
+		</action>
+		
+		<action name="order" class="bookshop.action.OrderAction">
+			<result>/order.jsp</result>
+		</action>
+		<action name="checkout" class="bookshop.action.CheckoutAction">
+			<result type="redirectAction">order</result>
+		</action>
+	</package>
+	
+	<package name="admin" namespace="/" extends="global">
+		<interceptors>
+			<interceptor name="loginInterceptor" class="bookshop.interceptor.AutoLoginInterceptor" />
+			<interceptor name="adminInterceptor" class="bookshop.interceptor.AdminInterceptor" />
+			
+		</interceptors>
+		<default-interceptor-ref name="adminStack"/>
+		<!-- ========================================================== -->
+		<action name="booklist" class="bookshop.action.BookListAction">
+			<result>/booklist.jsp</result>
+		</action>
+		<action name="bookdetail" class="bookshop.action.BookDetailAction">
+			<result type="json"><param name="noCache">true</param></result>
+		</action>
+		<action name="savebook" class="bookshop.action.SaveBookAction">
+			<param name="savePath">/img</param>
+			<result type="redirectAction">booklist</result>
+		</action>	
+		<action name="deletebook" class="bookshop.action.DeleteBookAction">
+			<result type="redirectAction">booklist</result>
+		</action>
+		
+		<!-- ========================================================== -->
+		<action name="userlist" class="bookshop.action.UserListAction">
+			<result>/userlist.jsp</result>
+		</action>
+		<action name="saveuser" class="bookshop.action.SaveUserAction">
+			<result type="redirectAction">userlist</result>
+		</action>
+		<action name="deleteuser" class="bookshop.action.DeleteUserAction">
+			<result type="redirectAction">userlist</result>
+		</action>
+		
+		<!-- ========================================================== -->
+		<action name="orderlist" class="bookshop.action.OrderListAction">
+			<result>/orderlist.jsp</result>
+		</action>
+		<action name="checkout2" class="bookshop.action.CheckoutAction">
+			<result type="redirectAction">orderlist</result>
+		</action>
+		<action name="createorderdetail" class="bookshop.action.CreateOrderDetailAction">
+			<result type="redirectAction">orderlist</result>
+		</action>
+		<action name="deleteorder" class="bookshop.action.DeleteOrderAction">
+			<result type="redirectAction">orderlist</result>
+		</action>
+		<action name="updateorderdetail" class="bookshop.action.UpdateOrderDetailAction">
+			<result type="redirectAction">orderlist</result>
+		</action>
+		<action name="deleteorderdetail" class="bookshop.action.DeleteOrderDetailAction">
+			<result type="redirectAction">orderlist</result>
+		</action>
+		<action name="createorder" class="bookshop.action.CreateOrderAction">
+			<result type="redirectAction">orderlist</result>
+		</action>
+	</package>
+
+</struts>
